@@ -1,4 +1,5 @@
 function Header() {
+  const name = "Tuan";
   return (
     <div className="header">
       <div className="header-logo">

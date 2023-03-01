@@ -5,12 +5,12 @@ import Main from "./Main";
 import Footer, { name, className } from "./Footer";
 
 function App() {
+  const content = "Hello";
   return (
     <div className="wrapper">
       <Header />
       <Main />
       <Footer />
-      {name} - {className}
     </div>
   );
 }

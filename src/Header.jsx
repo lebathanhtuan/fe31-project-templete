@@ -1,9 +1,14 @@
-function Header() {
-  const name = "Tuan";
+function Header(props) {
+  const { name, handleClick, isShowSidebar, setIsShowSidebar } = props;
+
+  const handleToggleSidebar = () => {
+    setIsShowSidebar(!isShowSidebar);
+  };
+
   return (
     <div className="header">
       <div className="header-logo">
-        <h3>Menu Icon</h3>
+        <button onClick={() => handleToggleSidebar()}>Menu</button>
         <a href="home.html">
           <h3>Logo</h3>
         </a>
@@ -24,11 +29,10 @@ function Header() {
           </a>
         </div>
       </div>
-      <img
-        className="avatar"
-        src="../images/kisspng-computer-icons-portable-network-graphics-avatar-ic-5ba3c66e306b15.0756271715374598221983.png"
-        alt=""
-      />
+      <div>
+        <h3>{name}</h3>
+        <button onClick={() => handleClick()}>Logout</button>
+      </div>
     </div>
   );
 }

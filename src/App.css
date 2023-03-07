@@ -32,9 +32,14 @@
   margin-right: 16px;
 }
 .main {
-  padding-top: 56px;
   flex: 1;
-  background-color: #566969;
+  margin-top: 56px;
+  margin-left: 250px;
+  padding: 16px;
+  transition: all 0.4s;
+}
+.main.full {
+  margin-left: 0;
 }
 .footer {
   padding: 24px;
@@ -86,6 +91,26 @@
   height: 300px;
   background-color: #61dafb;
   border: 1px solid red;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex: 1;
+}
+.sidebar {
+  position: absolute;
+  left: -250px;
+  margin-top: 56px;
+  padding: 16px;
+  width: 250px;
+  height: 100%;
+  background-color: #14bbbb;
+  overflow: hidden;
+  transition: all 0.4s;
+}
+.sidebar.show {
+  left: 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {

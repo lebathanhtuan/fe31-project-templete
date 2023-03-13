@@ -1,11 +1,7 @@
 import { useState } from "react";
 
 function Main({ isShowSidebar }) {
-  const [count, setCount] = useState(0);
-  const [text, setText] = useState("");
-  console.log("🚀 ~ file: Main.jsx:6 ~ Main ~ text:", text);
-
-  const productList = [
+  const [productList, setProductList] = useState([
     {
       name: "iPhone 14",
       price: 999,
@@ -18,27 +14,73 @@ function Main({ isShowSidebar }) {
       name: "iPhone 14 Pro Max",
       price: 2999,
     },
-  ];
-
-  const handlePlus = () => {
-    setCount(count + 1);
-  };
-
-  const handleMinus = () => {
-    setCount(count - 1);
-  };
+  ]);
+  const [productData, setProductData] = useState({
+    name: "",
+    price: "",
+  });
+  console.log("🚀 ~ file: Main.jsx:22 ~ Main ~ productData:", productData);
+  const [productErrors, setProductErrors] = useState({
+    name: "",
+    price: "",
+  });
 
   const handleBuyProduct = (e, name) => {
-    console.log(e.target);
     console.log(`buy ${name}`);
   };
 
-  const handleChangeSearchKey = (e) => {
-    setText(e.target.value);
+  const handleChangeProductData = (e, key) => {
+    setProductData({
+      ...productData,
+      [key]: e.target.value,
+    });
   };
 
   const handleAddProduct = () => {
-    // setProductList ...
+    const onlyNumberRegex = /^[0-9]/g;
+    let isValid = true;
+    const errors = {
+      name: "",
+      price: "",
+    };
+    if (!productData.name) {
+      errors.name = "Name is required !!!";
+      isValid = false;
+    } else {
+      errors.name = "";
+    }
+
+    if (!productData.price) {
+      errors.price = "Price is required !!!";
+      isValid = false;
+    } else if (!onlyNumberRegex.test(productData.price)) {
+      errors.price = "Price is number !!!";
+      isValid = false;
+    } else {
+      errors.price = "";
+    }
+
+    if (isValid) {
+      setProductList([
+        ...productList,
+        {
+          name: productData.name,
+          price: parseInt(productData.price),
+        },
+      ]);
+      setProductData({
+        name: "",
+        price: "",
+      });
+    }
+    setProductErrors(errors);
+  };
+
+  const handleResetForm = () => {
+    setProductData({
+      name: "",
+      price: "",
+    });
   };
 
   const renderProductList = () => {
@@ -55,15 +97,23 @@ function Main({ isShowSidebar }) {
 
   return (
     <div className={isShowSidebar ? "main" : "main full"}>
-      <button onClick={() => handleMinus()}>-</button>
-      <h3>{count}</h3>
-      <button onClick={() => handlePlus()}>+</button>
-      <div>
-        <input name="searchKey" onChange={(e) => handleChangeSearchKey(e)} />
-        <p>{text}</p>
-      </div>
       <div>{renderProductList()}</div>
+      <input
+        type="text"
+        onChange={(e) => handleChangeProductData(e, "name")}
+        value={productData.name}
+        placeholder="Product name"
+      />
+      <span>{productErrors.name}</span>
+      <input
+        type="text"
+        onChange={(e) => handleChangeProductData(e, "price")}
+        value={productData.price}
+        placeholder="Product price"
+      />
+      <span>{productErrors.price}</span>
       <button onClick={() => handleAddProduct()}>Add product</button>
+      <button onClick={() => handleResetForm()}>Reset</button>
     </div>
   );
 }

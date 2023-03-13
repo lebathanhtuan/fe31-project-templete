@@ -1,14 +1,14 @@
 function Header(props) {
   const { name, handleClick, isShowSidebar, setIsShowSidebar } = props;
 
-  const handleToggleSidebar = () => {
-    setIsShowSidebar(!isShowSidebar);
-  };
+  // const handleToggleSidebar = () => {
+  //   setIsShowSidebar(!isShowSidebar);
+  // };
 
   return (
     <div className="header">
       <div className="header-logo">
-        <button onClick={() => handleToggleSidebar()}>Menu</button>
+        <button onClick={() => setIsShowSidebar(!isShowSidebar)}>Menu</button>
         <a href="home.html">
           <h3>Logo</h3>
         </a>

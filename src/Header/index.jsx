@@ -1,3 +1,6 @@
+import styles from "./Header.module.css";
+import * as S from "./styles";
+
 function Header(props) {
   const { name, handleClick, isShowSidebar, setIsShowSidebar } = props;
 
@@ -8,10 +11,17 @@ function Header(props) {
   return (
     <div className="header">
       <div className="header-logo">
-        <button onClick={() => setIsShowSidebar(!isShowSidebar)}>Menu</button>
-        <a href="home.html">
-          <h3>Logo</h3>
-        </a>
+        <S.Button
+          type="primary"
+          width="100px"
+          // hide
+          onClick={() => setIsShowSidebar(!isShowSidebar)}
+        >
+          Menu
+        </S.Button>
+        {/* <a href="home.html">
+          <S.Title>Logo</S.Title>
+        </a> */}
       </div>
       <div className="nav-link">
         <div className="nav-link-item">

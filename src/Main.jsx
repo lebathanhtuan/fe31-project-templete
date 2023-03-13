@@ -1,4 +1,6 @@
 import { useState } from "react";
+import Text from "./Text";
+import "./test.css";
 
 function Main({ isShowSidebar }) {
   const [productList, setProductList] = useState([
@@ -114,6 +116,9 @@ function Main({ isShowSidebar }) {
       <span>{productErrors.price}</span>
       <button onClick={() => handleAddProduct()}>Add product</button>
       <button onClick={() => handleResetForm()}>Reset</button>
+      <Text>
+        <h3>ABC</h3>
+      </Text>
     </div>
   );
 }

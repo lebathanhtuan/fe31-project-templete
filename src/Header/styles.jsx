@@ -30,7 +30,7 @@ export const Button = styled.button`
           border: none;
 
           &:hover {
-            opacity: 0.7;
+            opacity: 0.7; 
           }
         `;
       }

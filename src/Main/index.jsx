@@ -1,6 +1,7 @@
-import { useState } from "react";
-import Text from "./Text";
-import "./test.css";
+import { useState, Fragment } from "react";
+import { Input, Button, Card, Row, Col } from "antd";
+
+import * as S from "./styles";
 
 function Main({ isShowSidebar }) {
   const [productList, setProductList] = useState([
@@ -11,6 +12,26 @@ function Main({ isShowSidebar }) {
     {
       name: "iPhone 14 Pro",
       price: 1999,
+    },
+    {
+      name: "iPhone 14 Pro Max",
+      price: 2999,
+    },
+    {
+      name: "iPhone 14 Pro Max",
+      price: 2999,
+    },
+    {
+      name: "iPhone 14 Pro Max",
+      price: 2999,
+    },
+    {
+      name: "iPhone 14 Pro Max",
+      price: 2999,
+    },
+    {
+      name: "iPhone 14 Pro Max",
+      price: 2999,
     },
     {
       name: "iPhone 14 Pro Max",
@@ -88,38 +109,38 @@ function Main({ isShowSidebar }) {
   const renderProductList = () => {
     return productList.map((item, index) => {
       return (
-        <div key={index} className="product-item">
-          <h2>{item.name}</h2>
-          <h3>{item.price}</h3>
-          <button onClick={(e) => handleBuyProduct(e, item.name)}>Buy</button>
-        </div>
+        <Col key={index} xs={24} md={12} xl={8}>
+          <Card title={item.name} size="small">
+            <h3>{item.price}</h3>
+            <Button onClick={(e) => handleBuyProduct(e, item.name)}>Buy</Button>
+          </Card>
+        </Col>
       );
     });
   };
 
   return (
-    <div className={isShowSidebar ? "main" : "main full"}>
-      <div>{renderProductList()}</div>
-      <input
+    <S.MainWrapper isFull={!isShowSidebar}>
+      <Row gutter={[16, 16]}>{renderProductList()}</Row>
+      <Input
         type="text"
         onChange={(e) => handleChangeProductData(e, "name")}
         value={productData.name}
         placeholder="Product name"
       />
       <span>{productErrors.name}</span>
-      <input
+      <Input
         type="text"
         onChange={(e) => handleChangeProductData(e, "price")}
         value={productData.price}
         placeholder="Product price"
       />
       <span>{productErrors.price}</span>
-      <button onClick={() => handleAddProduct()}>Add product</button>
-      <button onClick={() => handleResetForm()}>Reset</button>
-      <Text>
-        <h3>ABC</h3>
-      </Text>
-    </div>
+      <Button type="primary" onClick={() => handleAddProduct()}>
+        Add product
+      </Button>
+      <S.CustomButton onClick={() => handleResetForm()}>Reset</S.CustomButton>
+    </S.MainWrapper>
   );
 }
 

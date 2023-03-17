@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
 
 import "./App.css";
@@ -16,23 +17,31 @@ function App() {
     console.log("click");
   };
   return (
-    <ThemeProvider theme={theme === "light" ? light : dark}>
-      <div className="wrapper">
-        <Header
-          name="Tuấn"
-          handleClick={handleClick}
-          isShowSidebar={isShowSidebar}
-          setIsShowSidebar={setIsShowSidebar}
-        />
-        <div className="container">
-          <Sidebar isShowSidebar={isShowSidebar} />
-          <Main isShowSidebar={isShowSidebar} />
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: "#fa541c",
+        },
+      }}
+    >
+      <ThemeProvider theme={theme === "light" ? light : dark}>
+        <div className="wrapper">
+          <Header
+            name="Tuấn"
+            handleClick={handleClick}
+            isShowSidebar={isShowSidebar}
+            setIsShowSidebar={setIsShowSidebar}
+          />
+          <div className="container">
+            <Sidebar isShowSidebar={isShowSidebar} />
+            <Main isShowSidebar={isShowSidebar} />
+          </div>
+          <button onClick={() => setTheme("light")}>Light</button>
+          <button onClick={() => setTheme("dark")}>Dark</button>
+          <Footer />
         </div>
-        <button onClick={() => setTheme("light")}>Light</button>
-        <button onClick={() => setTheme("dark")}>Dark</button>
-        <Footer />
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    </ConfigProvider>
   );
 }
 

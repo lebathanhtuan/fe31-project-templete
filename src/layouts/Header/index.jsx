@@ -1,12 +1,20 @@
-import styles from "./Header.module.css";
+import { Link, useNavigate } from "react-router-dom";
+
 import * as S from "./styles";
 
 function Header(props) {
-  const { name, handleClick, isShowSidebar, setIsShowSidebar } = props;
+  const { name, isShowSidebar, setIsShowSidebar } = props;
+
+  const navigate = useNavigate();
 
   // const handleToggleSidebar = () => {
   //   setIsShowSidebar(!isShowSidebar);
   // };
+
+  const handleLogout = () => {
+    // window.location.href = "/login";
+    navigate("/login");
+  };
 
   return (
     <div className="header">
@@ -25,23 +33,19 @@ function Header(props) {
       </div>
       <div className="nav-link">
         <div className="nav-link-item">
-          <a href="list.html">
-            <h4>List</h4>
-          </a>
-          <div className="sub-nav">
-            <div className="sub-nav-item">Item 1</div>
-            <div className="sub-nav-item">Item 2</div>
-          </div>
+          <Link to="/">
+            <h4>Home</h4>
+          </Link>
         </div>
         <div className="nav-link-item">
-          <a href="about.html">
+          <Link to="/about">
             <h4>About</h4>
-          </a>
+          </Link>
         </div>
       </div>
       <div>
         <h3>{name}</h3>
-        <button onClick={() => handleClick()}>Logout</button>
+        <button onClick={() => handleLogout()}>Logout</button>
       </div>
     </div>
   );

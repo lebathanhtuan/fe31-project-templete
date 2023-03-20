@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import * as S from "./styles";
 
-function Header(props) {
+function AdminHeader(props) {
   const { name, isShowSidebar, setIsShowSidebar } = props;
 
   const navigate = useNavigate();
@@ -22,26 +22,10 @@ function Header(props) {
         <S.Button
           type="primary"
           width="100px"
-          // hide
           onClick={() => setIsShowSidebar(!isShowSidebar)}
         >
           Menu
         </S.Button>
-        {/* <a href="home.html">
-          <S.Title>Logo</S.Title>
-        </a> */}
-      </div>
-      <div className="nav-link">
-        <div className="nav-link-item">
-          <Link to="/">
-            <h4>Home</h4>
-          </Link>
-        </div>
-        <div className="nav-link-item">
-          <Link to="/about">
-            <h4>About</h4>
-          </Link>
-        </div>
       </div>
       <div>
         <h3>{name}</h3>
@@ -51,4 +35,4 @@ function Header(props) {
   );
 }
 
-export default Header;
+export default AdminHeader;

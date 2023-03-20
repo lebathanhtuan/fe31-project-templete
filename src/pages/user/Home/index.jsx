@@ -1,5 +1,8 @@
-import { useState, Fragment } from "react";
+import { useState } from "react";
+import { Link, generatePath } from "react-router-dom";
 import { Input, Button, Card, Row, Col } from "antd";
+
+import { ROUTES } from "../../../constants/routes";
 
 import * as S from "./styles";
 
@@ -109,10 +112,14 @@ function HomePage() {
     return productList.map((item, index) => {
       return (
         <Col key={index} xs={24} md={12} xl={8}>
-          <Card title={item.name} size="small">
-            <h3>{item.price}</h3>
-            <Button onClick={(e) => handleBuyProduct(e, item.name)}>Buy</Button>
-          </Card>
+          <Link to={generatePath(ROUTES.USER.PRODUCT_DETAIL, { id: index })}>
+            <Card title={item.name} size="small">
+              <h3>{item.price}</h3>
+              <Button onClick={(e) => handleBuyProduct(e, item.name)}>
+                Buy
+              </Button>
+            </Card>
+          </Link>
         </Col>
       );
     });

@@ -4,20 +4,24 @@ import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
 
 import "../App.css";
-import Header from "../layouts/Header";
-import Sidebar from "../layouts/Sidebar";
-import Footer from "../layouts/Footer";
+import AdminLayout from "../layouts/AdminLayout";
+import UserLayout from "../layouts/UserLayout";
+import LoginLayout from "../layouts/LoginLayout";
 
-import HomePage from "../pages/Home";
-import AboutPage from "../pages/About";
-import ProductDetailPage from "../pages/ProductDetail";
+import DashboardPage from "../pages/admin/Dashboard";
+
+import HomePage from "../pages/user/Home";
+import AboutPage from "../pages/user/About";
+import ProductDetailPage from "../pages/user/ProductDetail";
+
 import LoginPage from "../pages/Login";
+
+import { ROUTES } from "../constants/routes";
 
 import { light, dark } from "../themes";
 import * as S from "./styles";
 
 function App() {
-  const [isShowSidebar, setIsShowSidebar] = useState(true);
   const [theme, setTheme] = useState("light");
 
   return (
@@ -29,27 +33,22 @@ function App() {
       }}
     >
       <ThemeProvider theme={theme === "light" ? light : dark}>
-        <div className="wrapper">
-          <Header
-            name="Tuấn"
-            isShowSidebar={isShowSidebar}
-            setIsShowSidebar={setIsShowSidebar}
-          />
-          <div className="container">
-            <Sidebar isShowSidebar={isShowSidebar} />
-            <S.MainWrapper isFull={!isShowSidebar}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/product/:id" element={<ProductDetailPage />} />
-                <Route path="/login" element={<LoginPage />} />
-              </Routes>
-            </S.MainWrapper>
-          </div>
-          {/* <button onClick={() => setTheme("light")}>Light</button>
-          <button onClick={() => setTheme("dark")}>Dark</button> */}
-          <Footer />
-        </div>
+        <Routes>
+          <Route element={<AdminLayout />}>
+            <Route path={ROUTES.ADMIN.DASHBOARD} element={<DashboardPage />} />
+          </Route>
+          <Route element={<UserLayout />}>
+            <Route path={ROUTES.USER.HOME} element={<HomePage />} />
+            <Route path={ROUTES.USER.ABOUT} element={<AboutPage />} />
+            <Route
+              path={ROUTES.USER.PRODUCT_DETAIL}
+              element={<ProductDetailPage />}
+            />
+          </Route>
+          <Route element={<LoginLayout />}>
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          </Route>
+        </Routes>
       </ThemeProvider>
     </ConfigProvider>
   );

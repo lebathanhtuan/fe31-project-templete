@@ -29,7 +29,6 @@ function TodoList() {
           <Form.Item
             label="Title"
             name="title"
-            validateFirst
             rules={[
               {
                 required: true,

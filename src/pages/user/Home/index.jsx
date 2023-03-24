@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, generatePath } from "react-router-dom";
 import { Input, Button, Card, Row, Col } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
 import { ROUTES } from "../../../constants/routes";
+import { getProductListAction } from "../../../redux/actions";
 
 import * as S from "./styles";
 
@@ -49,6 +51,10 @@ function HomePage() {
     name: "",
     price: "",
   });
+
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.product);
+  console.log("🚀 ~ file: index.jsx:56 ~ HomePage ~ data:", data);
 
   // Mounting và unmounting
   useEffect(() => {
@@ -119,6 +125,10 @@ function HomePage() {
     });
   };
 
+  const getProductList = () => {
+    dispatch(getProductListAction([1, 2, 3]));
+  };
+
   const renderProductList = () => {
     return productList.map((item, index) => {
       return (
@@ -157,6 +167,7 @@ function HomePage() {
         Add product
       </Button>
       <S.CustomButton onClick={() => handleResetForm()}>Reset</S.CustomButton>
+      <Button onClick={() => getProductList()}>Get Product List</Button>
     </S.HomeWrapper>
   );
 }

@@ -1,5 +1,5 @@
-import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
 
@@ -23,8 +23,7 @@ import { light, dark } from "../themes";
 import * as S from "./styles";
 
 function App() {
-  const [theme, setTheme] = useState("light");
-
+  const { theme } = useSelector((state) => state.common);
   return (
     <ConfigProvider
       theme={{

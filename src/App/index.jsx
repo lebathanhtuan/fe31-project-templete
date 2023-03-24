@@ -9,6 +9,7 @@ import UserLayout from "../layouts/UserLayout";
 import LoginLayout from "../layouts/LoginLayout";
 
 import DashboardPage from "../pages/admin/Dashboard";
+import TodoListPage from "../pages/admin/TodoList";
 
 import HomePage from "../pages/user/Home";
 import AboutPage from "../pages/user/About";
@@ -36,6 +37,7 @@ function App() {
         <Routes>
           <Route element={<AdminLayout />}>
             <Route path={ROUTES.ADMIN.DASHBOARD} element={<DashboardPage />} />
+            <Route path={ROUTES.ADMIN.TODO_LIST} element={<TodoListPage />} />
           </Route>
           <Route element={<UserLayout />}>
             <Route path={ROUTES.USER.HOME} element={<HomePage />} />
@@ -45,9 +47,7 @@ function App() {
               element={<ProductDetailPage />}
             />
           </Route>
-          <Route element={<LoginLayout />}>
-            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          </Route>
+          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         </Routes>
       </ThemeProvider>
     </ConfigProvider>

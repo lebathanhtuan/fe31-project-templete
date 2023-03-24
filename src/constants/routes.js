@@ -7,6 +7,7 @@ export const ROUTES = {
   },
   ADMIN: {
     DASHBOARD: "/admin/dashboard",
+    TODO_LIST: "/admin/todolist",
   },
   LOGIN: "/login",
   REGISTER: "/register",

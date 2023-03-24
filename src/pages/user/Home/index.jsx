@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, generatePath } from "react-router-dom";
 import { Input, Button, Card, Row, Col } from "antd";
 
@@ -49,6 +49,17 @@ function HomePage() {
     name: "",
     price: "",
   });
+
+  // Mounting và unmounting
+  useEffect(() => {
+    // Câu lệnh gọi API
+    console.log("Khởi tạo");
+
+    return () => {
+      // Clear dữ liệu khi rời khỏi trang
+      console.log("Rời khỏi");
+    };
+  }, []);
 
   const handleBuyProduct = (e, name) => {
     console.log(`buy ${name}`);

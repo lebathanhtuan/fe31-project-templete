@@ -6,20 +6,12 @@ import * as S from "./styles";
 
 const SIDEBAR_ITEMS = [
   {
-    label: "Home",
-    path: ROUTES.USER.HOME,
+    label: "Dashboard",
+    path: ROUTES.ADMIN.DASHBOARD,
   },
   {
-    label: "About",
-    path: ROUTES.USER.ABOUT,
-  },
-  {
-    label: "Login",
-    path: ROUTES.LOGIN,
-  },
-  {
-    label: "Register",
-    path: ROUTES.REGISTER,
+    label: "To Do List",
+    path: ROUTES.ADMIN.TODO_LIST,
   },
 ];
 
@@ -27,7 +19,6 @@ function Sidebar(props) {
   const { isShowSidebar } = props;
 
   const { pathname } = useLocation();
-  console.log("🚀 ~ file: index.jsx:8 ~ Sidebar ~ pathname:", pathname);
 
   const renderSidebarItems = () => {
     return SIDEBAR_ITEMS.map((item, index) => {

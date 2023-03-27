@@ -1,34 +1,66 @@
-import { Form, Input, Card, Button } from "antd";
+import { Fragment, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import { Form, Input, Card, Button, Space } from "antd";
+
+import TodoItem from "./TodoItem";
 
 function TodoList() {
+  const [toDoList, setToDoList] = useState([]);
+  console.log("🚀 ~ file: index.jsx:7 ~ TodoList ~ toDoList:", toDoList);
+
+  const handleAddToDo = (values) => {
+    const newValues = {
+      ...values,
+      id: uuidv4(),
+    };
+    const newToDoList = [newValues, ...toDoList];
+    setToDoList(newToDoList);
+  };
+
+  const handleEditToDo = (id, values) => {
+    const newToDoList = [...toDoList];
+    const index = toDoList.findIndex((item) => item.id === id);
+    newToDoList.splice(index, 1, values);
+    setToDoList(newToDoList);
+  };
+
+  const handleRemoveToDo = (id) => {
+    // const newToDoList = toDoList.filter((item) => item.id !== id);
+    const newToDoList = [...toDoList];
+    const index = toDoList.findIndex((item) => item.id === id);
+    newToDoList.splice(index, 1);
+    setToDoList(newToDoList);
+  };
+
+  const renderToDoList = () => {
+    return toDoList.map((item) => {
+      return (
+        <Fragment key={item.id}>
+          <TodoItem
+            id={item.id}
+            title={item.title}
+            content={item.content}
+            handleEditToDo={handleEditToDo}
+            handleRemoveToDo={handleRemoveToDo}
+          />
+        </Fragment>
+      );
+    });
+  };
+
   return (
     <div>
-      <Card>
+      <Card size="small">
         <Form
-          name="todolist"
-          labelCol={{ span: 6 }}
-          wrapperCol={{ span: 18 }}
-          onFinish={(values) => console.log(values)}
+          name="addTodo"
+          labelCol={{ span: 4 }}
+          wrapperCol={{ span: 20 }}
+          onFinish={(values) => handleAddToDo(values)}
         >
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[
-              {
-                required: true,
-                message: "Email là bắt buộc!",
-              },
-              {
-                type: "email",
-                message: "Email không đúng định dạng!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
           <Form.Item
             label="Title"
             name="title"
+            validateFirst
             rules={[
               {
                 required: true,
@@ -40,30 +72,43 @@ function TodoList() {
                 type: "string",
                 message: "Title phải dài hơn 3 kí tự",
               },
+              {
+                pattern: /^[A-Z].{0,}$/g,
+                message: "Chữ cái đầu tiên phải viết hoa",
+              },
             ]}
           >
             <Input />
           </Form.Item>
-          <Form.Item label="Content" name="content">
-            <Input />
-          </Form.Item>
           <Form.Item
-            label="Phone number"
-            name="phoneNumber"
+            label="Content"
+            name="content"
+            validateFirst
             rules={[
               {
-                pattern: /(84|0[3|5|7|8|9])+([0-9]{8})\b/g,
-                message: "Số điện thoại không đúng định dạng",
+                required: true,
+                whitespace: true,
+                message: "Content là bắt buộc!",
+              },
+              {
+                max: 20,
+                type: "string",
+                message: "Content phải ngắn hơn 20 kí tự",
+              },
+              {
+                pattern: /^[A-Z].{0,}$/g,
+                message: "Chữ cái đầu tiên phải viết hoa",
               },
             ]}
           >
             <Input />
           </Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Submit
+            Add
           </Button>
         </Form>
       </Card>
+      {renderToDoList()}
     </div>
   );
 }

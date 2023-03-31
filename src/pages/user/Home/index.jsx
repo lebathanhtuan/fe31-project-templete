@@ -127,6 +127,10 @@ function HomePage() {
 
   const getProductList = () => {
     dispatch(getProductListAction([1, 2, 3]));
+    // dispatch({
+    //   type: "GET_PRODUCT_LIST",
+    //   payload: [1, 2, 3],
+    // });
   };
 
   const renderProductList = () => {

@@ -1,61 +1,55 @@
-import { Fragment, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import { Form, Input, Card, Button, Space } from "antd";
+import { Fragment, useState, useMemo, useEffect } from "react";
+import { Form, Input, Card, Button } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 
 import TodoItem from "./TodoItem";
 
+import { addToDoAction } from "../../../redux/actions";
+
 function TodoList() {
-  const [toDoList, setToDoList] = useState([]);
-  console.log("🚀 ~ file: index.jsx:7 ~ TodoList ~ toDoList:", toDoList);
+  const [text, setText] = useState("");
+  const [searchKey, setSearchKey] = useState("");
+  const [addForm] = Form.useForm();
 
-  const handleAddToDo = (values) => {
-    const newValues = {
-      ...values,
-      id: uuidv4(),
-    };
-    const newToDoList = [newValues, ...toDoList];
-    setToDoList(newToDoList);
-  };
+  const { todoList } = useSelector((state) => state.todo);
 
-  const handleEditToDo = (id, values) => {
-    const newToDoList = [...toDoList];
-    const index = toDoList.findIndex((item) => item.id === id);
-    newToDoList.splice(index, 1, values);
-    setToDoList(newToDoList);
-  };
+  const filterTodoList = useMemo(
+    () =>
+      todoList.filter((item) =>
+        item.title.toLowerCase().includes(searchKey.toLowerCase())
+      ),
+    [searchKey, todoList]
+  );
 
-  const handleRemoveToDo = (id) => {
-    // const newToDoList = toDoList.filter((item) => item.id !== id);
-    const newToDoList = [...toDoList];
-    const index = toDoList.findIndex((item) => item.id === id);
-    newToDoList.splice(index, 1);
-    setToDoList(newToDoList);
-  };
+  const dispatch = useDispatch();
 
-  const renderToDoList = () => {
-    return toDoList.map((item) => {
+  const renderToDoList = useMemo(() => {
+    console.log("render");
+    return filterTodoList.map((item) => {
       return (
         <Fragment key={item.id}>
-          <TodoItem
-            id={item.id}
-            title={item.title}
-            content={item.content}
-            handleEditToDo={handleEditToDo}
-            handleRemoveToDo={handleRemoveToDo}
-          />
+          <TodoItem id={item.id} title={item.title} content={item.content} />
         </Fragment>
       );
     });
-  };
+  }, [filterTodoList]);
 
   return (
     <div>
       <Card size="small">
         <Form
           name="addTodo"
+          form={addForm}
           labelCol={{ span: 4 }}
           wrapperCol={{ span: 20 }}
-          onFinish={(values) => handleAddToDo(values)}
+          onFinish={(values) => {
+            dispatch(addToDoAction(values));
+            // dispatch({
+            //   type: 'ADD_TO_DO',
+            //   payload: values
+            // })
+            addForm.resetFields();
+          }}
         >
           <Form.Item
             label="Title"
@@ -108,7 +102,15 @@ function TodoList() {
           </Button>
         </Form>
       </Card>
-      {renderToDoList()}
+      <Input
+        onChange={(e) => setSearchKey(e.target.value)}
+        style={{ marginTop: 16 }}
+      />
+      {renderToDoList}
+      <Input
+        onChange={(e) => setText(e.target.value)}
+        style={{ marginTop: 16 }}
+      />
     </div>
   );
 }

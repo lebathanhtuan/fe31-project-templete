@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import { Form, Input, Card, Button, Space } from "antd";
+import { useDispatch } from "react-redux";
+import { useNavigate, generatePath } from "react-router-dom";
 
-function TodoList({ id, title, content, handleEditToDo, handleRemoveToDo }) {
+import { editToDoAction, removeToDoAction } from "../../../redux/actions";
+import { ROUTES } from "../../../constants/routes";
+
+function TodoItem({ id, title, content }) {
   const [isEdit, setIsEdit] = useState(false);
-  console.log("🚀 ~ file: TodoItem.jsx:7 ~ TodoList ~ isEdit:", isEdit);
-
   const [editForm] = Form.useForm();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const renderView = () => {
     return (
@@ -29,7 +34,7 @@ function TodoList({ id, title, content, handleEditToDo, handleRemoveToDo }) {
           content: content,
         }}
         onFinish={(values) => {
-          handleEditToDo(id, values);
+          dispatch(editToDoAction({ id: id, values: values }));
           setIsEdit(false);
         }}
       >
@@ -106,7 +111,28 @@ function TodoList({ id, title, content, handleEditToDo, handleRemoveToDo }) {
             Edit
           </Button>
         )}
-        <Button danger onClick={() => handleRemoveToDo(id)}>
+        <Button
+          onClick={() =>
+            navigate(
+              // `${generatePath(ROUTES.ADMIN.TODO_DETAIL, {
+              //   id: id,
+              // })}?title=${title}&content=${content}`,
+              {
+                pathname: generatePath(ROUTES.ADMIN.TODO_DETAIL, { id: id }),
+                search: `?title=${title}&content=${content}`,
+              },
+              {
+                state: {
+                  title: title,
+                  content: content,
+                },
+              }
+            )
+          }
+        >
+          Detail
+        </Button>
+        <Button danger onClick={() => dispatch(removeToDoAction({ id: id }))}>
           Remove
         </Button>
       </Space>
@@ -114,4 +140,4 @@ function TodoList({ id, title, content, handleEditToDo, handleRemoveToDo }) {
   );
 }
 
-export default TodoList;
+export default TodoItem;

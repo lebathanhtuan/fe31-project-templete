@@ -56,15 +56,8 @@ function HomePage() {
   const data = useSelector((state) => state.product);
   console.log("🚀 ~ file: index.jsx:56 ~ HomePage ~ data:", data);
 
-  // Mounting và unmounting
   useEffect(() => {
-    // Câu lệnh gọi API
-    console.log("Khởi tạo");
-
-    return () => {
-      // Clear dữ liệu khi rời khỏi trang
-      console.log("Rời khỏi");
-    };
+    dispatch(getProductListAction());
   }, []);
 
   const handleBuyProduct = (e, name) => {
@@ -125,14 +118,6 @@ function HomePage() {
     });
   };
 
-  const getProductList = () => {
-    dispatch(getProductListAction([1, 2, 3]));
-    // dispatch({
-    //   type: "GET_PRODUCT_LIST",
-    //   payload: [1, 2, 3],
-    // });
-  };
-
   const renderProductList = () => {
     return productList.map((item, index) => {
       return (
@@ -171,7 +156,6 @@ function HomePage() {
         Add product
       </Button>
       <S.CustomButton onClick={() => handleResetForm()}>Reset</S.CustomButton>
-      <Button onClick={() => getProductList()}>Get Product List</Button>
     </S.HomeWrapper>
   );
 }

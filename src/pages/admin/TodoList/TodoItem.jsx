@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Form, Input, Card, Button, Space } from "antd";
 import { useDispatch } from "react-redux";
 import { useNavigate, generatePath } from "react-router-dom";
+import PropTypes from "prop-types";
 
 import { editToDoAction, removeToDoAction } from "../../../redux/actions";
 import { ROUTES } from "../../../constants/routes";
@@ -139,5 +140,16 @@ function TodoItem({ id, title, content }) {
     </Card>
   );
 }
+
+TodoItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+};
+TodoItem.defaultProps = {
+  id: "",
+  title: "",
+  content: "",
+};
 
 export default TodoItem;

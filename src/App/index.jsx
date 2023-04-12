@@ -52,6 +52,7 @@ function App() {
             />
           </Route>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
       </ThemeProvider>
     </ConfigProvider>

@@ -2,7 +2,7 @@ export const ROUTES = {
   USER: {
     HOME: "/",
     PRODUCT_LIST: "/products",
-    PRODUCT_DETAIL: "/san-pham/:id",
+    PRODUCT_DETAIL: "/products/:id",
     ABOUT: "/about",
   },
   ADMIN: {

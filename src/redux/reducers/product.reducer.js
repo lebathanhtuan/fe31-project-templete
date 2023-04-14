@@ -1,33 +1,50 @@
 import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
-  productList: [],
-  productDetail: {},
-  productError: "",
-  productLoading: false,
+  productList: {
+    data: [],
+    meta: {},
+    load: false,
+    error: "",
+  },
+  productDetail: {
+    data: {},
+    load: false,
+    error: "",
+  },
 };
 
 const productReducer = createReducer(initialState, {
   GET_PRODUCT_LIST_REQUEST: (state, action) => {
     return {
       ...state,
-      productLoading: true,
+      productList: {
+        ...state.productList,
+        load: true,
+      },
     };
   },
   GET_PRODUCT_LIST_SUCCESS: (state, action) => {
-    const { data } = action.payload;
+    const { data, meta, more } = action.payload;
     return {
       ...state,
-      productList: data,
-      productLoading: false,
+      productList: {
+        ...state.productList,
+        data: more ? [...state.productList.data, ...data] : data,
+        meta: meta,
+        load: false,
+      },
     };
   },
   GET_PRODUCT_LIST_FAIL: (state, action) => {
     const { error } = action.payload;
     return {
       ...state,
-      productError: error,
-      productLoading: false,
+      productList: {
+        ...state.productList,
+        load: false,
+        error: error,
+      },
     };
   },
 

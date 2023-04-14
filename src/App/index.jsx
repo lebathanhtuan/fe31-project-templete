@@ -13,6 +13,7 @@ import TodoListPage from "../pages/admin/TodoList";
 import TodoDetailPage from "../pages/admin/TodoDetail";
 
 import HomePage from "../pages/user/Home";
+import ProductListPage from "../pages/user/ProductList";
 import AboutPage from "../pages/user/About";
 import ProductDetailPage from "../pages/user/ProductDetail";
 
@@ -46,6 +47,10 @@ function App() {
           <Route element={<UserLayout />}>
             <Route path={ROUTES.USER.HOME} element={<HomePage />} />
             <Route path={ROUTES.USER.ABOUT} element={<AboutPage />} />
+            <Route
+              path={ROUTES.USER.PRODUCT_LIST}
+              element={<ProductListPage />}
+            />
             <Route
               path={ROUTES.USER.PRODUCT_DETAIL}
               element={<ProductDetailPage />}

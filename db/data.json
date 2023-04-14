@@ -1,0 +1,72 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 14 Pro",
+      "price": 20000000,
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "name": "iPhone 14",
+      "price": 20000000,
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "name": "Samsung Galaxy S23",
+      "price": 20000000,
+      "categoryId": 2
+    },
+    {
+      "id": 4,
+      "name": "Samsung Galaxy S23 Plus",
+      "price": 20000000,
+      "categoryId": 2
+    },
+    {
+      "id": 5,
+      "name": "iPhone 13",
+      "price": 20000000,
+      "categoryId": 1
+    },
+    {
+      "id": 6,
+      "name": "Xiaomi Mi 13",
+      "price": 20000000,
+      "categoryId": 3
+    },
+    {
+      "id": 7,
+      "name": "iPhone 13 Pro",
+      "price": 20000000,
+      "categoryId": 1
+    },
+    {
+      "id": 8,
+      "name": "Samsung Galaxy S22",
+      "price": 20000000,
+      "categoryId": 2
+    },
+    {
+      "id": 9,
+      "name": "Samsung Galaxy S22 Ultra",
+      "price": 20000000,
+      "categoryId": 2
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Apple"
+    },
+    {
+      "id": 2,
+      "name": "Samsung"
+    },
+    {
+      "id": 3,
+      "name": "Xiaomi"
+    }
+  ]
+}

@@ -1,4 +1,10 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const getProductListAction = createAction("GET_PRODUCT_LIST_REQUEST");
-export const getProductDetailAction = createAction("GET_PRODUCT_DETAIL");
+import { PRODUCT_ACTION, REQUEST } from "../constants";
+
+export const getProductListAction = createAction(
+  REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST)
+);
+export const getProductDetailAction = createAction(
+  REQUEST(PRODUCT_ACTION.GET_PRODUCT_DETAIL)
+);

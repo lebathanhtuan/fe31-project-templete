@@ -6,7 +6,6 @@ import { ThemeProvider } from "styled-components";
 import "../App.css";
 import AdminLayout from "../layouts/AdminLayout";
 import UserLayout from "../layouts/UserLayout";
-import LoginLayout from "../layouts/LoginLayout";
 
 import DashboardPage from "../pages/admin/Dashboard";
 import TodoListPage from "../pages/admin/TodoList";
@@ -18,11 +17,11 @@ import AboutPage from "../pages/user/About";
 import ProductDetailPage from "../pages/user/ProductDetail";
 
 import LoginPage from "../pages/Login";
+import RegisterPage from "../pages/Register";
 
 import { ROUTES } from "../constants/routes";
 
 import { light, dark } from "../themes";
-import * as S from "./styles";
 
 function App() {
   const { theme } = useSelector((state) => state.common);
@@ -57,6 +56,7 @@ function App() {
             />
           </Route>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+          <Route path={ROUTES.REGISTER} element={<RegisterPage />} />
           <Route path="*" element={<div>404 Not Found</div>} />
         </Routes>
       </ThemeProvider>

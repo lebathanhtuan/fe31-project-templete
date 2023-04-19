@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { Link, generatePath } from "react-router-dom";
-import { Input, Button, Card, Row, Col, Select, Checkbox } from "antd";
+import { Input, Button, Card, Row, Col, Select, Checkbox, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
 import { ROUTES } from "../../../constants/routes";
@@ -16,7 +16,12 @@ function ProductListPage() {
   const [filterParams, setFilterParams] = useState({
     categoryId: [],
     searchKey: "",
+    sort: "",
   });
+  console.log(
+    "🚀 ~ file: index.jsx:21 ~ ProductListPage ~ filterParams:",
+    filterParams
+  );
 
   const dispatch = useDispatch();
 
@@ -33,16 +38,17 @@ function ProductListPage() {
     dispatch(getCategoryListAction());
   }, []);
 
-  const handleFilterCategory = (values) => {
+  const handleFilter = (key, values) => {
     setFilterParams({
       ...filterParams,
-      categoryId: values,
+      [key]: values,
     });
     dispatch(
       getProductListAction({
+        ...filterParams,
+        [key]: values,
         page: 1,
         limit: PRODUCT_LIMIT,
-        categoryId: values,
       })
     );
   };
@@ -50,9 +56,9 @@ function ProductListPage() {
   const handleShowMore = () => {
     dispatch(
       getProductListAction({
+        ...filterParams,
         page: productList.meta.page + 1,
         limit: PRODUCT_LIMIT,
-        categoryId: filterParams.categoryId,
         more: true,
       })
     );
@@ -87,7 +93,9 @@ function ProductListPage() {
       <Row gutter={[16, 16]}>
         <Col span={6}>
           <Card title="Filter" size="small">
-            <Checkbox.Group onChange={(values) => handleFilterCategory(values)}>
+            <Checkbox.Group
+              onChange={(values) => handleFilter("categoryId", values)}
+            >
               <Row>{renderCategoryFilter}</Row>
             </Checkbox.Group>
           </Card>
@@ -95,16 +103,27 @@ function ProductListPage() {
         <Col span={18}>
           <Row gutter={[16, 16]} style={{ marginBottom: 16 }}>
             <Col span={16}>
-              <Input />
+              <Input
+                onChange={(e) => handleFilter("searchKey", e.target.value)}
+                placeholder="Search..."
+              />
             </Col>
             <Col span={8}>
-              <Select style={{ width: "100%" }}>
-                <Select.Option value="desc">Giá tăng dần</Select.Option>
-                <Select.Option value="asc">Giá giảm dần</Select.Option>
+              <Select
+                onChange={(value) => handleFilter("sort", value)}
+                placeholder="Sort by"
+                style={{ width: "100%" }}
+              >
+                <Select.Option value="name.desc">Tên A-Z</Select.Option>
+                <Select.Option value="name.asc">Tên Z-A</Select.Option>
+                <Select.Option value="price.asc">Giá tăng dần</Select.Option>
+                <Select.Option value="price.desc">Giá giảm dần</Select.Option>
               </Select>
             </Col>
           </Row>
-          <Row gutter={[16, 16]}>{renderProductList}</Row>
+          <Spin spinning={productList.load}>
+            <Row gutter={[16, 16]}>{renderProductList}</Row>
+          </Spin>
           {productList.data.length !== productList.meta.total && (
             <Row justify="center" style={{ marginTop: 16 }}>
               <Button onClick={() => handleShowMore()}>Show more</Button>

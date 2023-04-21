@@ -1,18 +1,16 @@
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Dropdown, Button } from "antd";
 
 import { ROUTES } from "../../constants/routes";
+import { logoutAction } from "../../redux/actions";
 
 function AdminHeader() {
+  const { userInfo } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // const handleToggleSidebar = () => {
-  //   setIsShowSidebar(!isShowSidebar);
-  // };
-
-  const handleLogout = () => {
-    // window.location.href = "/login";
-    navigate("/login");
-  };
 
   return (
     <div className="header">
@@ -30,10 +28,30 @@ function AdminHeader() {
         </div>
       </div>
       <div>
-        <button onClick={() => navigate(ROUTES.ADMIN.DASHBOARD)}>
-          Dashboard
-        </button>
-        <button onClick={() => handleLogout()}>Logout</button>
+        {userInfo.data.id ? (
+          <Dropdown
+            menu={{
+              items: [
+                {
+                  key: "dashdoard",
+                  label: <Link to={ROUTES.ADMIN.DASHBOARD}>Dashboard</Link>,
+                  style: {
+                    display: userInfo.data.role === "admin" ? "block" : "none",
+                  },
+                },
+                {
+                  key: "logout",
+                  label: "Logout",
+                  onClick: () => dispatch(logoutAction()),
+                },
+              ],
+            }}
+          >
+            <h3>{userInfo.data.fullName}</h3>
+          </Dropdown>
+        ) : (
+          <Button onClick={() => navigate(ROUTES.LOGIN)}>Login</Button>
+        )}
       </div>
     </div>
   );

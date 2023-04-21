@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 
 import { loginAction } from "../../redux/actions";
+import { ROUTES } from "../../constants/routes";
 
 import * as S from "./styles";
 
@@ -11,6 +13,9 @@ function LoginPage() {
 
   const { loginData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     if (loginData.error) {
@@ -30,12 +35,19 @@ function LoginPage() {
   const handleLogin = (values) => {
     dispatch(
       loginAction({
-        email: values.email,
-        password: values.password,
+        data: {
+          email: values.email,
+          password: values.password,
+        },
+        callback: (role) =>
+          navigate(
+            role === "admin" ? ROUTES.ADMIN.DASHBOARD : ROUTES.USER.HOME
+          ),
       })
     );
   };
 
+  if (accessToken) return <Navigate to={ROUTES.USER.HOME} />;
   return (
     <S.LoginWrapper>
       <S.LoginContainer>

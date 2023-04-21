@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Outlet, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import AdminHeader from "../AdminHeader";
 import Sidebar from "../Sidebar";
@@ -11,9 +12,15 @@ import * as S from "./styles";
 function AdminLayout() {
   const [isShowSidebar, setIsShowSidebar] = useState(true);
 
-  const role = "admin";
+  const { userInfo } = useSelector((state) => state.auth);
 
-  if (role !== "admin") return <Navigate to={ROUTES.USER.HOME} />;
+  const accessToken = localStorage.getItem("accessToken");
+
+  if (accessToken && userInfo.load) {
+    return <div>Loading...</div>;
+  } else if (userInfo.data.role !== "admin") {
+    return <Navigate to={ROUTES.USER.HOME} />;
+  }
   return (
     <div className="wrapper">
       <AdminHeader

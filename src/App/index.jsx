@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
+import jwtDecode from "jwt-decode";
 
 import "../App.css";
 import AdminLayout from "../layouts/AdminLayout";
@@ -20,11 +22,23 @@ import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
 
 import { ROUTES } from "../constants/routes";
+import { getUserInfoAction } from "../redux/actions";
 
 import { light, dark } from "../themes";
 
 function App() {
+  const dispatch = useDispatch();
+
   const { theme } = useSelector((state) => state.common);
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      const tokenData = jwtDecode(accessToken);
+      dispatch(getUserInfoAction({ id: tokenData.sub }));
+    }
+  }, []);
+
   return (
     <ConfigProvider
       theme={{

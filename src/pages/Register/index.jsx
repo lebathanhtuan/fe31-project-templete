@@ -1,8 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, Navigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
 
 import { registerAction } from "../../redux/actions";
+import { ROUTES } from "../../constants/routes";
 
 import * as S from "./styles";
 
@@ -11,6 +13,9 @@ function RegisterPage() {
 
   const { registerData } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     if (registerData.error) {
@@ -26,13 +31,18 @@ function RegisterPage() {
   const handleRegister = (values) => {
     dispatch(
       registerAction({
-        fullName: values.fullName,
-        email: values.email,
-        password: values.password,
+        data: {
+          fullName: values.fullName,
+          email: values.email,
+          password: values.password,
+          role: "user",
+        },
+        callback: () => navigate(ROUTES.LOGIN),
       })
     );
   };
 
+  if (accessToken) return <Navigate to={ROUTES.USER.HOME} />;
   return (
     <S.RegisterWrapper>
       <S.RegisterContainer>

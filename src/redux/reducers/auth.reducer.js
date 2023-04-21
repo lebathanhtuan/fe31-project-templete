@@ -5,7 +5,7 @@ import { AUTH_ACTION, REQUEST, SUCCESS, FAIL } from "../constants";
 const initialState = {
   userInfo: {
     data: {},
-    load: false,
+    load: true,
     error: "",
   },
   loginData: {
@@ -24,7 +24,6 @@ const authReducer = createReducer(initialState, {
     return {
       ...state,
       loginData: {
-        ...state.loginData,
         load: true,
         error: "",
       },
@@ -36,7 +35,10 @@ const authReducer = createReducer(initialState, {
       ...state,
       userInfo: {
         ...state.userInfo,
-        data: data,
+        data: data.user,
+      },
+      loginData: {
+        ...state.loginData,
         load: false,
       },
     };
@@ -46,7 +48,6 @@ const authReducer = createReducer(initialState, {
     return {
       ...state,
       loginData: {
-        ...state.loginData,
         load: false,
         error: error,
       },
@@ -57,7 +58,6 @@ const authReducer = createReducer(initialState, {
     return {
       ...state,
       registerData: {
-        ...state.registerData,
         load: true,
         error: "",
       },
@@ -77,7 +77,51 @@ const authReducer = createReducer(initialState, {
     return {
       ...state,
       registerData: {
-        ...state.registerData,
+        load: false,
+        error: error,
+      },
+    };
+  },
+  // LOGOUT
+  [REQUEST(AUTH_ACTION.LOGOUT)]: (state, action) => {
+    localStorage.removeItem("accessToken");
+    return {
+      ...state,
+      userInfo: {
+        data: {},
+        load: false,
+        error: "",
+      },
+    };
+  },
+  // GET_USER_INFO
+  [REQUEST(AUTH_ACTION.GET_USER_INFO)]: (state, action) => {
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
+        load: true,
+        error: "",
+      },
+    };
+  },
+  [SUCCESS(AUTH_ACTION.GET_USER_INFO)]: (state, action) => {
+    const { data } = action.payload;
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
+        data: data,
+        load: false,
+      },
+    };
+  },
+  [FAIL(AUTH_ACTION.GET_USER_INFO)]: (state, action) => {
+    const { error } = action.payload;
+    return {
+      ...state,
+      userInfo: {
+        ...state.userInfo,
         load: false,
         error: error,
       },

@@ -10,6 +10,7 @@ export const RegisterWrapper = styled.div`
 
 export const RegisterContainer = styled.div`
   padding: 16px;
-  max-width: 500px;
+  max-width: 350px;
+  width: 100%;
   background-color: white;
 `;

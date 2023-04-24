@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
 import jwtDecode from "jwt-decode";
+import "moment/locale/vi";
 
 import "../App.css";
 import AdminLayout from "../layouts/AdminLayout";

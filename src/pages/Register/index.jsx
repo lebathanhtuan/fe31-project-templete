@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, Navigate } from "react-router-dom";
 import { Button, Form, Input } from "antd";
@@ -15,7 +15,7 @@ function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = useMemo(() => localStorage.getItem("accessToken"), []);
 
   useEffect(() => {
     if (registerData.error) {
@@ -122,7 +122,12 @@ function RegisterPage() {
           >
             <Input.Password />
           </Form.Item>
-          <Button type="primary" htmlType="submit" block>
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            loading={registerData.load}
+          >
             Submit
           </Button>
         </Form>

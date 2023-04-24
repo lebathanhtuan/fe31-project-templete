@@ -12,8 +12,12 @@ function* getProductListSaga(action) {
     // };
     const result = yield axios.get("http://localhost:4000/products", {
       params: {
+        // relationships
+        _expand: "category",
+        // paging
         _page: page,
         _limit: limit,
+        // filter
         categoryId: categoryId,
         q: searchKey,
         // ...sortParam,
@@ -48,7 +52,11 @@ function* getProductListSaga(action) {
 function* getProductDetailSaga(action) {
   try {
     const { id } = action.payload;
-    const result = yield axios.get(`http://localhost:4000/products/${id}`);
+    const result = yield axios.get(`http://localhost:4000/products/${id}`, {
+      params: {
+        _expand: "category",
+      },
+    });
     yield put({
       type: SUCCESS(PRODUCT_ACTION.GET_PRODUCT_DETAIL),
       payload: {

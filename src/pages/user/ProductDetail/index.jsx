@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, generatePath } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,6 +12,7 @@ import {
   Form,
   Rate,
   Space,
+  notification,
 } from "antd";
 import moment from "moment";
 
@@ -22,9 +23,13 @@ import {
   getProductListAction,
   getReviewListAction,
   sendReviewAction,
+  addToCartAction,
 } from "../../../redux/actions";
+import * as S from "./styles";
 
 function ProductDetailPage() {
+  const [quantity, setQuantity] = useState(1);
+
   const { id } = useParams();
   const [reviewForm] = Form.useForm();
 
@@ -54,6 +59,20 @@ function ProductDetailPage() {
       })
     );
   }, [id]);
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCartAction({
+        id: parseInt(id),
+        name: productDetail.data.name,
+        price: productDetail.data.price,
+        quantity: quantity,
+      })
+    );
+    notification.success({
+      message: "Thêm vào giỏ thành công!",
+    });
+  };
 
   const handleReview = (values) => {
     dispatch(
@@ -109,13 +128,25 @@ function ProductDetailPage() {
         <p>{productDetail.data.category?.name}</p>
         <p>{productDetail.data.price?.toLocaleString()} VND</p>
         <div>
-          <InputNumber />
+          <InputNumber
+            min={1}
+            value={quantity}
+            onChange={(value) => setQuantity(value)}
+          />
         </div>
         <div>
-          <Button type="primary">Add To Cart</Button>
+          <Button type="primary" onClick={() => handleAddToCart()}>
+            Add To Cart
+          </Button>
         </div>
 
-        <div>Content</div>
+        <Card size="small">
+          <S.ProductContent
+            dangerouslySetInnerHTML={{
+              __html: productDetail.data.content,
+            }}
+          ></S.ProductContent>
+        </Card>
 
         <div>
           {userInfo.data.id && (

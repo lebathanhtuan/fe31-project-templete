@@ -24,54 +24,63 @@
       "id": 1,
       "name": "iPhone 14 Pro",
       "price": 25000000,
+      "content": "<h3 class='ql-align-justify'> <a href='https://www.thegioididong.com/dtdd/iphone-14-pro-max' target='_blank' style='color: rgb(47, 128, 237);'>iPhone 14 Pro Max</a>&nbsp;một siêu phẩm trong giới smartphone được nhà Táo tung ra thị trường vào tháng 09/2022. Máy trang bị con chip Apple A16 Bionic vô cùng mạnh mẽ, đi kèm theo đó là thiết kế hình màn hình mới, hứa hẹn mang lại những trải nghiệm đầy mới mẻ cho người dùng iPhone.</h3><h3 class='ql-align-justify'>Thiết kế cao cấp bền bỉ</h3><p class='ql-align-justify'>iPhone năm nay sẽ được thừa hưởng nét đặc trưng từ người anh&nbsp; <a href='https://www.thegioididong.com/dtdd/iphone-13-pro-max-1tb' target='_blank' style='color: rgb(47, 128, 237);'>iPhone 13 Pro Max</a>, vẫn sẽ là khung thép không gỉ và mặt lưng kính cường lực kết hợp với tạo hình vuông vức hiện đại thông qua cách tạo hình phẳng ở các cạnh và phần mặt lưng.</p><p class='ql-align-justify'> <br></p><p class='ql-align-justify'> <a href='https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-041222-103221.jpg' target='_blank' style='font-size: 18px; color: rgb(47, 128, 237);'> <img src='https://cdn.tgdd.vn/Products/Images/42/251192/iphone-14-pro-max-041222-103221.jpg' alt='Thiết kế sang trọng - iPhone 14 Pro Max 128GB'> </a></p><p class='ql-align-justify'> <br></p>",
       "categoryId": 1
     },
     {
       "id": 2,
       "name": "iPhone 14",
       "price": 20000000,
+      "content": "",
       "categoryId": 1
     },
     {
       "id": 3,
       "name": "Samsung Galaxy S23",
       "price": 20000000,
+      "content": "",
       "categoryId": 2
     },
     {
       "id": 4,
       "name": "Samsung Galaxy S23 Plus",
       "price": 23000000,
+      "content": "",
       "categoryId": 2
     },
     {
       "id": 5,
       "name": "iPhone 13",
       "price": 15000000,
+      "content": "",
       "categoryId": 1
     },
     {
       "id": 6,
       "name": "Xiaomi Mi 13",
       "price": 10000000,
+      "content": "",
       "categoryId": 3
     },
     {
       "id": 7,
       "name": "iPhone 13 Pro",
       "price": 18000000,
+      "content": "",
       "categoryId": 1
     },
     {
       "id": 8,
       "name": "Samsung Galaxy S22",
       "price": 20000000,
+      "content": "",
       "categoryId": 2
     },
     {
       "id": 9,
       "name": "Samsung Galaxy S22 Ultra",
       "price": 25000000,
+      "content": "",
       "categoryId": 2
     }
   ],

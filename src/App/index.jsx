@@ -19,6 +19,7 @@ import ProductListPage from "../pages/user/ProductList";
 import AboutPage from "../pages/user/About";
 import ProductDetailPage from "../pages/user/ProductDetail";
 import CartPage from "../pages/user/Cart";
+import InfoPage from "../pages/user/Info";
 
 import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
@@ -71,6 +72,7 @@ function App() {
               element={<ProductDetailPage />}
             />
             <Route path={ROUTES.USER.CART_LIST} element={<CartPage />} />
+            <Route path={ROUTES.USER.CHECKOUT_INFO} element={<InfoPage />} />
           </Route>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegisterPage />} />

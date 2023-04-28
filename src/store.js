@@ -7,6 +7,7 @@ import categoryReducer from "./redux/reducers/category.reducer";
 import todoReducer from "./redux/reducers/todolist.reducer";
 import reviewReducer from "./redux/reducers/review.reducer";
 import cartReducer from "./redux/reducers/cart.reducer";
+import locationReducer from "./redux/reducers/location.reducer";
 import commonReducer from "./redux/reducers/common.reducer";
 
 import rootSaga from "./redux/sagas";
@@ -21,6 +22,7 @@ const store = configureStore({
     todo: todoReducer,
     review: reviewReducer,
     cart: cartReducer,
+    location: locationReducer,
     common: commonReducer,
   },
   middleware: (getDefaultMiddleware) => [

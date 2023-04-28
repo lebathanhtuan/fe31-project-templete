@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Steps, Table, Button, Input, Space } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Steps, Table, Button, Input, Space, Row, Col, Card } from "antd";
 import {
   CreditCardOutlined,
   CheckCircleOutlined,
@@ -10,6 +10,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
+import { ROUTES } from "../../../constants/routes";
 import {
   updateCartItemAction,
   deleteCartItemAction,
@@ -17,8 +18,20 @@ import {
 
 function CartPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { cartList } = useSelector((state) => state.cart);
+
+  // let cartTotalPrice = 0;
+
+  // cartList.forEach((item) => {
+  //   cartTotalPrice = cartTotalPrice + item.price * item.quantity;
+  // });
+
+  const cartTotalPrice = cartList.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
   const tableColumn = [
     {
@@ -83,7 +96,7 @@ function CartPage() {
   ];
 
   return (
-    <div>
+    <div style={{ padding: 24 }}>
       <Steps
         current={0}
         items={[
@@ -111,6 +124,22 @@ function CartPage() {
         rowKey="id"
         pagination={false}
       />
+      <Row justify="end">
+        <Col span={8}>
+          <Card size="small" title="Tổng tiền">
+            {cartTotalPrice.toLocaleString()} VND
+          </Card>
+        </Col>
+      </Row>
+      <Row justify="end">
+        <Button
+          type="primary"
+          disabled={cartList.length === 0}
+          onClick={() => navigate(ROUTES.USER.CHECKOUT_INFO)}
+        >
+          Tiếp theo
+        </Button>
+      </Row>
     </div>
   );
 }

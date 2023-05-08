@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { Link, generatePath } from "react-router-dom";
+import { Link, generatePath, useLocation } from "react-router-dom";
 import { Input, Button, Card, Row, Col, Select, Checkbox, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -13,15 +13,13 @@ import {
 import * as S from "./styles";
 
 function ProductListPage() {
+  const { state } = useLocation();
+
   const [filterParams, setFilterParams] = useState({
-    categoryId: [],
+    categoryId: state?.categoryId ? [state?.categoryId] : [],
     searchKey: "",
     sort: "",
   });
-  console.log(
-    "🚀 ~ file: index.jsx:21 ~ ProductListPage ~ filterParams:",
-    filterParams
-  );
 
   const dispatch = useDispatch();
 
@@ -31,6 +29,7 @@ function ProductListPage() {
   useEffect(() => {
     dispatch(
       getProductListAction({
+        ...filterParams,
         page: 1,
         limit: PRODUCT_LIMIT,
       })
@@ -97,6 +96,7 @@ function ProductListPage() {
         <Col span={6}>
           <Card title="Filter" size="small">
             <Checkbox.Group
+              value={filterParams.categoryId}
               onChange={(values) => handleFilter("categoryId", values)}
             >
               <Row>{renderCategoryFilter}</Row>

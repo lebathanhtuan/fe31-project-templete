@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { ConfigProvider } from "antd";
 import { ThemeProvider } from "styled-components";
@@ -31,6 +31,7 @@ import { light, dark } from "../themes";
 
 function App() {
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
 
   const { theme } = useSelector((state) => state.common);
 
@@ -41,6 +42,10 @@ function App() {
       dispatch(getUserInfoAction({ id: tokenData.sub }));
     }
   }, []);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <ConfigProvider

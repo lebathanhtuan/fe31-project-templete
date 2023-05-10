@@ -11,15 +11,14 @@ import AdminLayout from "../layouts/AdminLayout";
 import UserLayout from "../layouts/UserLayout";
 
 import DashboardPage from "../pages/admin/Dashboard";
-import TodoListPage from "../pages/admin/TodoList";
-import TodoDetailPage from "../pages/admin/TodoDetail";
 
 import HomePage from "../pages/user/Home";
 import ProductListPage from "../pages/user/ProductList";
 import AboutPage from "../pages/user/About";
 import ProductDetailPage from "../pages/user/ProductDetail";
 import CartPage from "../pages/user/Cart";
-import InfoPage from "../pages/user/Info";
+import CheckoutPage from "../pages/user/Checkout";
+import ProfilePage from "../pages/user/Profile";
 
 import LoginPage from "../pages/Login";
 import RegisterPage from "../pages/Register";
@@ -59,11 +58,6 @@ function App() {
         <Routes>
           <Route element={<AdminLayout />}>
             <Route path={ROUTES.ADMIN.DASHBOARD} element={<DashboardPage />} />
-            <Route path={ROUTES.ADMIN.TODO_LIST} element={<TodoListPage />} />
-            <Route
-              path={ROUTES.ADMIN.TODO_DETAIL}
-              element={<TodoDetailPage />}
-            />
           </Route>
           <Route element={<UserLayout />}>
             <Route path={ROUTES.USER.HOME} element={<HomePage />} />
@@ -77,7 +71,8 @@ function App() {
               element={<ProductDetailPage />}
             />
             <Route path={ROUTES.USER.CART_LIST} element={<CartPage />} />
-            <Route path={ROUTES.USER.CHECKOUT_INFO} element={<InfoPage />} />
+            <Route path={ROUTES.USER.CHECKOUT} element={<CheckoutPage />} />
+            <Route path={ROUTES.USER.PROFILE} element={<ProfilePage />} />
           </Route>
           <Route path={ROUTES.LOGIN} element={<LoginPage />} />
           <Route path={ROUTES.REGISTER} element={<RegisterPage />} />

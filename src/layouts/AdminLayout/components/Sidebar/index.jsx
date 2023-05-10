@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../../../constants/routes";
 
 import * as S from "./styles";
 
@@ -9,13 +9,9 @@ const SIDEBAR_ITEMS = [
     label: "Dashboard",
     path: ROUTES.ADMIN.DASHBOARD,
   },
-  {
-    label: "To Do List",
-    path: ROUTES.ADMIN.TODO_LIST,
-  },
 ];
 
-function Sidebar(props) {
+function AdminSidebar(props) {
   const { isShowSidebar } = props;
 
   const { pathname } = useLocation();
@@ -41,4 +37,4 @@ function Sidebar(props) {
   );
 }
 
-export default Sidebar;
+export default AdminSidebar;

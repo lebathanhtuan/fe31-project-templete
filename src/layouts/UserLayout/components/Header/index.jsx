@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { Dropdown, Button, Space, Badge } from "antd";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 
-import { ROUTES } from "../../constants/routes";
-import { logoutAction } from "../../redux/actions";
+import { ROUTES } from "constants/routes";
+import { logoutAction } from "redux/actions";
 
 function AdminHeader() {
   const { userInfo } = useSelector((state) => state.auth);
@@ -19,8 +19,8 @@ function AdminHeader() {
       <h3>Logo</h3>
       <div className="nav-link">
         <div className="nav-link-item">
-          <Link to={ROUTES.USER.HOME}>
-            <h4>Home</h4>
+          <Link to={ROUTES.USER.PRODUCT_LIST}>
+            <h4>Product</h4>
           </Link>
         </div>
         <div className="nav-link-item">
@@ -51,8 +51,13 @@ function AdminHeader() {
                     },
                   },
                   {
+                    key: "userInfo",
+                    label: "Thông tin cá nhân",
+                    onClick: () => navigate(ROUTES.USER.PROFILE),
+                  },
+                  {
                     key: "logout",
-                    label: "Logout",
+                    label: "Đăng xuất",
                     onClick: () => dispatch(logoutAction()),
                   },
                 ],

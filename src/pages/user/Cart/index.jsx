@@ -1,20 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Steps, Table, Button, Input, Space, Row, Col, Card } from "antd";
-import {
-  CreditCardOutlined,
-  CheckCircleOutlined,
-  SolutionOutlined,
-  ShoppingCartOutlined,
-  MinusOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+import { Table, Button, Input, Space, Row, Col, Card } from "antd";
+import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { ROUTES } from "../../../constants/routes";
 import {
   updateCartItemAction,
   deleteCartItemAction,
 } from "../../../redux/actions";
+
+import * as S from "./styles";
 
 function CartPage() {
   const dispatch = useDispatch();
@@ -96,35 +91,17 @@ function CartPage() {
   ];
 
   return (
-    <div style={{ padding: 24 }}>
-      <Steps
-        current={0}
-        items={[
-          {
-            title: "Giỏ hàng",
-            icon: <ShoppingCartOutlined />,
-          },
-          {
-            title: "Thông tin giao hàng",
-            icon: <SolutionOutlined />,
-          },
-          {
-            title: "Thanh toán",
-            icon: <CreditCardOutlined />,
-          },
-          {
-            title: "Hoàn tất",
-            icon: <CheckCircleOutlined />,
-          },
-        ]}
-      />
-      <Table
-        columns={tableColumn}
-        dataSource={cartList}
-        rowKey="id"
-        pagination={false}
-      />
-      <Row justify="end">
+    <S.CartListWrapper>
+      <h2 style={{ marginBottom: 24 }}>Giỏ hàng</h2>
+      <Card size="small">
+        <Table
+          columns={tableColumn}
+          dataSource={cartList}
+          rowKey="id"
+          pagination={false}
+        />
+      </Card>
+      <Row justify="end" style={{ margin: "24px 0" }}>
         <Col span={8}>
           <Card size="small" title="Tổng tiền">
             {cartTotalPrice.toLocaleString()} VND
@@ -135,12 +112,12 @@ function CartPage() {
         <Button
           type="primary"
           disabled={cartList.length === 0}
-          onClick={() => navigate(ROUTES.USER.CHECKOUT_INFO)}
+          onClick={() => navigate(ROUTES.USER.CHECKOUT)}
         >
           Tiếp theo
         </Button>
       </Row>
-    </div>
+    </S.CartListWrapper>
   );
 }
 

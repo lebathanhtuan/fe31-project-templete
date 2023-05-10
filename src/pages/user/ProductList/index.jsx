@@ -3,12 +3,9 @@ import { Link, generatePath, useLocation } from "react-router-dom";
 import { Input, Button, Card, Row, Col, Select, Checkbox, Spin } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 
-import { ROUTES } from "../../../constants/routes";
-import { PRODUCT_LIMIT } from "../../../constants/paging";
-import {
-  getProductListAction,
-  getCategoryListAction,
-} from "../../../redux/actions";
+import { ROUTES } from "constants/routes";
+import { PRODUCT_LIMIT } from "constants/paging";
+import { getProductListAction, getCategoryListAction } from "redux/actions";
 
 import * as S from "./styles";
 

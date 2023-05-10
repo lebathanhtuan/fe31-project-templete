@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 
-import UserHeader from "../UserHeader";
-import Footer from "../Footer";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 import * as S from "./styles";
 
 function UserLayout() {
   return (
     <div className="wrapper">
-      <UserHeader />
+      <Header />
       <S.MainWrapper>
         <Outlet />
       </S.MainWrapper>

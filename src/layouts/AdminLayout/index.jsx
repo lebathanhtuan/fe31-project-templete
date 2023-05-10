@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Outlet, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import AdminHeader from "../AdminHeader";
-import Sidebar from "../Sidebar";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "constants/routes";
 
 import * as S from "./styles";
 
@@ -17,15 +17,13 @@ function AdminLayout() {
   const accessToken = localStorage.getItem("accessToken");
 
   if (accessToken && userInfo.load) {
-    console.log("🚀 ~ file: index.jsx:16 ~ AdminLayout ~ userInfo:", userInfo);
     return <div>Loading...</div>;
   } else if (userInfo.data.role !== "admin") {
-    console.log("🚀 ~ file: index.jsx:16 ~ AdminLayout ~ userInfo:", userInfo);
     return <Navigate to={ROUTES.USER.HOME} />;
   }
   return (
     <div className="wrapper">
-      <AdminHeader
+      <Header
         name="Tuấn"
         isShowSidebar={isShowSidebar}
         setIsShowSidebar={setIsShowSidebar}

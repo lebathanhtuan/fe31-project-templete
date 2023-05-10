@@ -154,6 +154,82 @@
       "id": 6
     }
   ],
+  "orders": [
+    {
+      "fullName": "Lê Bá Thanh Tuấn",
+      "email": "lebathanhtuan@gmail.com",
+      "phoneNumber": "+10849954060",
+      "cityCode": "79",
+      "districtCode": "771",
+      "wardCode": "27190",
+      "address": "123 ABC",
+      "paymentMethod": "cod",
+      "userId": 2,
+      "totalPrice": 175000000,
+      "status": "pending",
+      "createdAt": 1683721258751,
+      "updatedAt": 1683721258751,
+      "id": 1
+    },
+    {
+      "fullName": "Lê Bá Thanh Tuấn",
+      "email": "lebathanhtuan@gmail.com",
+      "phoneNumber": "0849954060",
+      "cityCode": "79",
+      "districtCode": "771",
+      "wardCode": "27205",
+      "address": "123 ABC",
+      "paymentMethod": "cod",
+      "userId": 2,
+      "totalPrice": 56000000,
+      "status": "pending",
+      "createdAt": 1683721889636,
+      "updatedAt": 1683721889637,
+      "id": 2
+    }
+  ],
+  "orderDetails": [
+    {
+      "orderId": 1,
+      "productId": 1,
+      "name": "iPhone 14 Pro",
+      "price": 25000000,
+      "quantity": 3,
+      "createdAt": 1683721258863,
+      "updatedAt": 1683721258863,
+      "id": 1
+    },
+    {
+      "orderId": 1,
+      "productId": 3,
+      "name": "Samsung Galaxy S23",
+      "price": 20000000,
+      "quantity": 5,
+      "createdAt": 1683721258960,
+      "updatedAt": 1683721258960,
+      "id": 2
+    },
+    {
+      "orderId": 2,
+      "productId": 6,
+      "name": "Xiaomi Mi 13",
+      "price": 10000000,
+      "quantity": 1,
+      "createdAt": 1683721889730,
+      "updatedAt": 1683721889730,
+      "id": 3
+    },
+    {
+      "orderId": 2,
+      "productId": 4,
+      "name": "Samsung Galaxy S23 Plus",
+      "price": 23000000,
+      "quantity": 2,
+      "createdAt": 1683721889812,
+      "updatedAt": 1683721889812,
+      "id": 4
+    }
+  ],
   "cities": [
     {
       "id": 10993,

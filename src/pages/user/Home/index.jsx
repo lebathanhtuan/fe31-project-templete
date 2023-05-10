@@ -1,10 +1,7 @@
-import { useState, useEffect } from "react";
-import { Link, generatePath, useNavigate } from "react-router-dom";
-import { Input, Button, Card, Row, Col } from "antd";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "antd";
 
 import { ROUTES } from "../../../constants/routes";
-import { getProductListAction } from "../../../redux/actions";
 
 import * as S from "./styles";
 

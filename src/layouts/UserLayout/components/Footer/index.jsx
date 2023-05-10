@@ -1,11 +1,11 @@
 import { Button } from "antd";
 import { useDispatch } from "react-redux";
 
-import { changeThemeAction } from "../../redux/actions";
+import { changeThemeAction } from "redux/actions";
 
 import * as S from "./styles";
 
-function Footer() {
+function UserFooter() {
   const dispatch = useDispatch();
 
   const handleChangeTheme = (theme) => {
@@ -23,4 +23,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default UserFooter;

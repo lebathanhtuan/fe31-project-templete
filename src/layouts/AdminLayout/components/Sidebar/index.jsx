@@ -9,6 +9,10 @@ const SIDEBAR_ITEMS = [
     label: "Dashboard",
     path: ROUTES.ADMIN.DASHBOARD,
   },
+  {
+    label: "Quản lý sản phẩm",
+    path: ROUTES.ADMIN.PRODUCT_MANAGEMENT,
+  },
 ];
 
 function AdminSidebar(props) {

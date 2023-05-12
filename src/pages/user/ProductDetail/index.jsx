@@ -87,6 +87,14 @@ function ProductDetailPage() {
     );
   };
 
+  const renderProductImages = useMemo(() => {
+    return productDetail.data.images.map((item) => {
+      return (
+        <img key={item.id} src={item.url} width="300px" height="auto" alt="" />
+      );
+    });
+  }, [productDetail.data.images]);
+
   const renderReviewList = useMemo(() => {
     return reviewList.data.map((item) => {
       return (
@@ -124,7 +132,7 @@ function ProductDetailPage() {
           <Rate value={totalRate / reviewList.data.length} disabled />
           <span>{`(${(totalRate / reviewList.data.length).toFixed(1)})`}</span>
         </Space>
-
+        {renderProductImages}
         <p>{productDetail.data.category?.name}</p>
         <p>{productDetail.data.price?.toLocaleString()} VND</p>
         <div>

@@ -14,6 +14,7 @@ function* getProductListSaga(action) {
       params: {
         // relationships
         _expand: "category",
+        _embed: "images",
         // paging
         _page: page,
         _limit: limit,
@@ -55,7 +56,7 @@ function* getProductDetailSaga(action) {
     const result = yield axios.get(`http://localhost:4000/products/${id}`, {
       params: {
         _expand: "category",
-        _embed: "images",
+        _embed: ["images", "reviews"],
       },
     });
     yield put({

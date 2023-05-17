@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, generatePath } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Row,
@@ -70,11 +70,11 @@ function ProductManagement() {
             <Button
               type="primary"
               ghost
-              // onClick={() =>
-              //   navigate(
-              //     generatePath(ROUTES.ADMIN.UPDATE_PRODUCT, { id: item.id })
-              //   )
-              // }
+              onClick={() =>
+                navigate(
+                  generatePath(ROUTES.ADMIN.UPDATE_PRODUCT, { id: item.id })
+                )
+              }
             >
               Update
             </Button>

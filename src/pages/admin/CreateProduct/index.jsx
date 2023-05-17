@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 
 import { ROUTES } from "constants/routes";
 import { getCategoryListAction, createProductAction } from "redux/actions";
+import { convertImageToBase64 } from "utils/file";
 
 import * as S from "./styles";
 
@@ -30,15 +31,6 @@ const CreateProductPage = () => {
   useEffect(() => {
     dispatch(getCategoryListAction());
   }, []);
-
-  const convertImageToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-  };
 
   const handleCreateProduct = async (values) => {
     const { images, ...productValues } = values;

@@ -102,6 +102,45 @@ function* createProductSaga(action) {
   }
 }
 
+function* updateProductSaga(action) {
+  try {
+    const { id, data, images, initialImageIds, callback } = action.payload;
+    const result = yield axios.patch(`http://localhost:4000/products/${id}`, data);
+    for (let i = 0; i < images.length; i++) {
+      if (!images[i].id) {
+        yield axios.post("http://localhost:4000/images", {
+          ...images[i],
+          productId: result.data.id,
+        });
+      }
+    }
+    for (let j = 0; j < initialImageIds.length; j++) {
+      const keepImage = images.find(
+        (item) => item.id && item.id === initialImageIds[j]
+      );
+      if (!keepImage) {
+        yield axios.delete(
+          `http://localhost:4000/images/${initialImageIds[j]}`
+        );
+      }
+    }
+    yield callback();
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(PRODUCT_ACTION.CREATE_PRODUCT),
+      payload: {
+        error: "Đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
 export default function* productSaga() {
   yield debounce(
     300,
@@ -113,4 +152,5 @@ export default function* productSaga() {
     getProductDetailSaga
   );
   yield takeEvery(REQUEST(PRODUCT_ACTION.CREATE_PRODUCT), createProductSaga);
+  yield takeEvery(REQUEST(PRODUCT_ACTION.UPDATE_PRODUCT), updateProductSaga);
 }

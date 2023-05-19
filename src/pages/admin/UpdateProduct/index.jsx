@@ -9,7 +9,7 @@ import { ROUTES } from "constants/routes";
 import {
   getCategoryListAction,
   getProductDetailAction,
-  createProductAction,
+  updateProductAction,
 } from "redux/actions";
 import { convertBase64ToImage, convertImageToBase64 } from "utils/file";
 
@@ -77,20 +77,22 @@ const UpdateProductPage = () => {
     for (let i = 0; i < images.length; i++) {
       const imgBase64 = await convertImageToBase64(images[i].originFileObj);
       await newImages.push({
+        ...(images[i].id && { id: images[i].id }),
         name: images[i].name,
         type: images[i].type,
         thumbUrl: images[i].thumbUrl,
         url: imgBase64,
       });
     }
-    // dispatch(
-    //   updateProductAction({
-    //     id: id,
-    //     data: productValues,
-    //     images: newImages,
-    //     callback: () => navigate(ROUTES.ADMIN.PRODUCT_MANAGEMENT),
-    //   })
-    // );
+    dispatch(
+      updateProductAction({
+        id: id,
+        data: productValues,
+        images: newImages,
+        initialImageIds: productDetail.data.images.map((item) => item.id),
+        callback: () => navigate(ROUTES.ADMIN.PRODUCT_MANAGEMENT),
+      })
+    );
   };
 
   const renderProductOptions = useMemo(() => {

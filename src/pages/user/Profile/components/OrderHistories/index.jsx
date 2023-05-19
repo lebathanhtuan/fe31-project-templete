@@ -45,6 +45,13 @@ const OrderHistories = () => {
       key: "createdAt",
       render: (createdAt) => moment(createdAt).format("DD/MM/YYYY HH:mm"),
     },
+    {
+      title: "Địa chỉ giao hàng",
+      dataIndex: "address",
+      key: "address",
+      render: (_, item) =>
+        `${item.address}, ${item.wardName}, ${item.districtName}, ${item.cityName}`,
+    },
   ];
 
   return (

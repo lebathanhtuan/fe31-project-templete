@@ -26,6 +26,7 @@ function* getProductListSaga(action) {
           _sort: sort.split(".")[0],
           _order: sort.split(".")[1],
         }),
+        isDelete: false,
       },
     });
     yield put({
@@ -56,7 +57,8 @@ function* getProductDetailSaga(action) {
     const result = yield axios.get(`http://localhost:4000/products/${id}`, {
       params: {
         _expand: "category",
-        _embed: ["images", "reviews"],
+        _embed: ["images", "favorites"],
+        isDelete: false,
       },
     });
     yield put({
@@ -105,7 +107,10 @@ function* createProductSaga(action) {
 function* updateProductSaga(action) {
   try {
     const { id, data, images, initialImageIds, callback } = action.payload;
-    const result = yield axios.patch(`http://localhost:4000/products/${id}`, data);
+    const result = yield axios.patch(
+      `http://localhost:4000/products/${id}`,
+      data
+    );
     for (let i = 0; i < images.length; i++) {
       if (!images[i].id) {
         yield axios.post("http://localhost:4000/images", {
@@ -126,14 +131,42 @@ function* updateProductSaga(action) {
     }
     yield callback();
     yield put({
-      type: SUCCESS(PRODUCT_ACTION.CREATE_PRODUCT),
+      type: SUCCESS(PRODUCT_ACTION.UPDATE_PRODUCT),
       payload: {
         data: result.data,
       },
     });
   } catch (e) {
     yield put({
-      type: FAIL(PRODUCT_ACTION.CREATE_PRODUCT),
+      type: FAIL(PRODUCT_ACTION.UPDATE_PRODUCT),
+      payload: {
+        error: "Đã có lỗi xảy ra!",
+      },
+    });
+  }
+}
+
+function* deleteProductSaga(action) {
+  try {
+    const { id, ...filterParams } = action.payload;
+    const result = yield axios.patch(`http://localhost:4000/products/${id}`, {
+      isDelete: true,
+    });
+    yield put({
+      type: REQUEST(PRODUCT_ACTION.GET_PRODUCT_LIST),
+      payload: {
+        ...filterParams,
+      },
+    });
+    yield put({
+      type: SUCCESS(PRODUCT_ACTION.DELETE_PRODUCT),
+      payload: {
+        data: result.data,
+      },
+    });
+  } catch (e) {
+    yield put({
+      type: FAIL(PRODUCT_ACTION.DELETE_PRODUCT),
       payload: {
         error: "Đã có lỗi xảy ra!",
       },
@@ -153,4 +186,5 @@ export default function* productSaga() {
   );
   yield takeEvery(REQUEST(PRODUCT_ACTION.CREATE_PRODUCT), createProductSaga);
   yield takeEvery(REQUEST(PRODUCT_ACTION.UPDATE_PRODUCT), updateProductSaga);
+  yield takeEvery(REQUEST(PRODUCT_ACTION.DELETE_PRODUCT), deleteProductSaga);
 }

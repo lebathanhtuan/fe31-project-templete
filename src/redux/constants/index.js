@@ -5,3 +5,4 @@ export * from "./review.constant";
 export * from "./cart.constant";
 export * from "./location.constant";
 export * from "./order.constant";
+export * from "./favorite.constant";

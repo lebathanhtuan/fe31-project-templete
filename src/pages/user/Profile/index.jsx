@@ -25,8 +25,13 @@ function Profile() {
             children: <OrderHistories />,
           },
           {
-            label: "Đổi mật khẩu",
+            label: "Sản phẩm yêu thích",
             key: 3,
+            children: null,
+          },
+          {
+            label: "Đổi mật khẩu",
+            key: 4,
             children: null,
           },
         ]}

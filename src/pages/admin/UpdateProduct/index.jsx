@@ -24,7 +24,7 @@ const UpdateProductPage = () => {
   const [updateForm] = Form.useForm();
 
   const { categoryList } = useSelector((state) => state.category);
-  const { productDetail, createProductData } = useSelector(
+  const { productDetail, updateProductData } = useSelector(
     (state) => state.product
   );
 
@@ -111,7 +111,7 @@ const UpdateProductPage = () => {
         <h3>Update Product</h3>
         <Button
           type="primary"
-          loading={createProductData.load}
+          loading={updateProductData.load}
           onClick={() => updateForm.submit()}
         >
           Update

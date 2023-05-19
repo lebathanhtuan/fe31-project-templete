@@ -11,27 +11,29 @@ import {
   Space,
   Avatar,
   Pagination,
+  Popconfirm,
 } from "antd";
 
 import { ROUTES } from "constants/routes";
 import { ADMIN_TABLE_LIMIT } from "constants/paging";
-import { getProductListAction, getCategoryListAction } from "redux/actions";
+import {
+  getProductListAction,
+  getCategoryListAction,
+  deleteProductAction,
+} from "redux/actions";
 import * as S from "./styles";
 
 function ProductManagement() {
   const [filterParams, setFilterParams] = useState({
     categoryId: [],
     searchKey: "",
+    sort: "id.desc",
   });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { productList } = useSelector((state) => state.product);
-  console.log(
-    "🚀 ~ file: index.jsx:29 ~ ProductManagement ~ productList:",
-    productList
-  );
   const { categoryList } = useSelector((state) => state.category);
 
   const tableColumn = [
@@ -78,9 +80,25 @@ function ProductManagement() {
             >
               Update
             </Button>
-            <Button ghost danger>
-              Delete
-            </Button>
+            <Popconfirm
+              title="Bạn có chắc muốn xóa sản phẩm này không?"
+              onConfirm={() =>
+                dispatch(
+                  deleteProductAction({
+                    ...filterParams,
+                    id: item.id,
+                    page: 1,
+                    limit: ADMIN_TABLE_LIMIT,
+                  })
+                )
+              }
+              okText="Xóa"
+              cancelText="Hủy"
+            >
+              <Button ghost danger>
+                Delete
+              </Button>
+            </Popconfirm>
           </Space>
         );
       },

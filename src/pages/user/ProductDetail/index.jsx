@@ -14,6 +14,11 @@ import {
   Space,
   notification,
 } from "antd";
+import {
+  ShoppingCartOutlined,
+  HeartOutlined,
+  HeartFilled,
+} from "@ant-design/icons";
 import moment from "moment";
 
 import { ROUTES } from "../../../constants/routes";
@@ -24,6 +29,8 @@ import {
   getReviewListAction,
   sendReviewAction,
   addToCartAction,
+  favoriteProductAction,
+  unFavoriteProductAction,
 } from "../../../redux/actions";
 import * as S from "./styles";
 
@@ -49,6 +56,14 @@ function ProductDetailPage() {
     [reviewList.data]
   );
 
+  const isLike = useMemo(
+    () =>
+      productDetail.data.favorites?.findIndex(
+        (item) => item.userId === userInfo.data.id
+      ) !== -1,
+    [productDetail.data.favorites, userInfo.data.id]
+  );
+
   useEffect(() => {
     dispatch(getProductDetailAction({ id: id }));
     dispatch(getReviewListAction({ productId: id }));
@@ -72,6 +87,37 @@ function ProductDetailPage() {
     notification.success({
       message: "Thêm vào giỏ thành công!",
     });
+  };
+
+  const handleToggleFavorite = () => {
+    if (userInfo.data.id) {
+      console.log(
+        "🚀 ~ file: index.jsx:95 ~ handleToggleFavorite ~ isLike:",
+        isLike
+      );
+      if (isLike) {
+        const favoriteData = productDetail.data.favorites?.find(
+          (item) => item.userId === userInfo.data.id
+        );
+        dispatch(
+          unFavoriteProductAction({
+            id: favoriteData.id,
+            productId: productDetail.data.id,
+          })
+        );
+      } else {
+        dispatch(
+          favoriteProductAction({
+            productId: productDetail.data.id,
+            userId: userInfo.data.id,
+          })
+        );
+      }
+    } else {
+      notification.error({
+        message: "Vui lòng đăng nhập để thực hiện chức năng này!",
+      });
+    }
   };
 
   const handleReview = (values) => {
@@ -142,11 +188,24 @@ function ProductDetailPage() {
             onChange={(value) => setQuantity(value)}
           />
         </div>
-        <div>
-          <Button type="primary" onClick={() => handleAddToCart()}>
+        <Space>
+          <Button
+            type="primary"
+            size="large"
+            icon={<ShoppingCartOutlined />}
+            onClick={() => handleAddToCart()}
+          >
             Add To Cart
           </Button>
-        </div>
+          <Button
+            size="large"
+            danger={isLike}
+            icon={isLike ? <HeartFilled /> : <HeartOutlined />}
+            onClick={() => handleToggleFavorite()}
+          >
+            {productDetail.data?.favorites?.length || 0} liked
+          </Button>
+        </Space>
 
         <Card size="small">
           <S.ProductContent

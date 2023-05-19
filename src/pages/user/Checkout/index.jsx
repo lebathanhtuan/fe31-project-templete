@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import {
   Form,
   Button,
@@ -35,7 +35,10 @@ function CheckoutPage() {
   const { cartList } = useSelector((state) => state.cart);
   const { userInfo } = useSelector((state) => state.auth);
 
-  const initialValues = {};
+  const initialValues = {
+    fullName: userInfo.data.fullName,
+    email: userInfo.data.email,
+  };
 
   const tableColumn = [
     {
@@ -67,15 +70,30 @@ function CheckoutPage() {
     dispatch(getCityListAction());
   }, []);
 
+  useEffect(() => {
+    if (userInfo.data.id) {
+      checkoutForm.resetFields();
+    }
+  }, [userInfo.data]);
+
   const handleSubmitCheckoutForm = (values) => {
     const totalPrice = cartList.reduce(
       (total, item) => total + item.price * item.quantity,
       0
     );
+    const { cityCode, districtCode, wardCode } = values;
+    const cityData = cityList.data.find((item) => item.code === cityCode);
+    const districtData = districtList.data.find(
+      (item) => item.code === districtCode
+    );
+    const wardData = wardList.data.find((item) => item.code === wardCode);
     dispatch(
       orderProductAction({
         data: {
           ...values,
+          cityName: cityData?.name,
+          districtName: districtData?.name,
+          wardName: wardData?.name,
           userId: userInfo.data.id,
           totalPrice: totalPrice,
           status: "pending",
@@ -116,6 +134,7 @@ function CheckoutPage() {
     });
   }, [wardList.data]);
 
+  // if (!cartList.length) return <Navigate to={ROUTES.USER.CART_LIST} />;
   return (
     <S.CheckoutWrapper>
       <h2 style={{ marginBottom: 24 }}>Thủ tục thanh toán</h2>

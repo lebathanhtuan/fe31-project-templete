@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useParams, generatePath } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Spin,
   Row,
   Col,
   Card,
@@ -46,12 +45,13 @@ function ProductDetailPage() {
   const { productList, productDetail } = useSelector((state) => state.product);
   const { reviewList } = useSelector((state) => state.review);
 
-  const totalRate = useMemo(
+  const averageRate = useMemo(
     () =>
       reviewList.data.length
-        ? reviewList.data
-            .map((item) => item.rate)
-            .reduce((total, item) => total + item)
+        ? (
+            reviewList.data.reduce((total, item) => total + item.rate, 0) /
+            reviewList.data.length
+          ).toFixed(1)
         : 0,
     [reviewList.data]
   );
@@ -91,10 +91,6 @@ function ProductDetailPage() {
 
   const handleToggleFavorite = () => {
     if (userInfo.data.id) {
-      console.log(
-        "🚀 ~ file: index.jsx:95 ~ handleToggleFavorite ~ isLike:",
-        isLike
-      );
       if (isLike) {
         const favoriteData = productDetail.data.favorites?.find(
           (item) => item.userId === userInfo.data.id
@@ -144,14 +140,18 @@ function ProductDetailPage() {
   const renderReviewList = useMemo(() => {
     return reviewList.data.map((item) => {
       return (
-        <Card size="small" key={item.id}>
+        <S.ReviewItemWrapper key={item.id}>
           <Space>
             <h3>{item.user.fullName}</h3>
             <span>{moment(item.createdAt).fromNow()}</span>
           </Space>
-          <Rate value={item.rate} disabled style={{ fontSize: 12 }} />
+          <Rate
+            value={item.rate}
+            disabled
+            style={{ display: "block", fontSize: 12 }}
+          />
           <p>{item.comment}</p>
-        </Card>
+        </S.ReviewItemWrapper>
       );
     });
   }, [reviewList.data]);
@@ -171,59 +171,92 @@ function ProductDetailPage() {
   }, [productList.data]);
 
   return (
-    <Spin spinning={productDetail.load}>
-      <div>
-        <h3>{productDetail.data.name}</h3>
-        <Space>
-          <Rate value={totalRate / reviewList.data.length} disabled />
-          <span>{`(${(totalRate / reviewList.data.length).toFixed(1)})`}</span>
-        </Space>
-        {renderProductImages}
-        <p>{productDetail.data.category?.name}</p>
-        <p>{productDetail.data.price?.toLocaleString()} VND</p>
-        <div>
-          <InputNumber
-            min={1}
-            value={quantity}
-            onChange={(value) => setQuantity(value)}
-          />
-        </div>
-        <Space>
-          <Button
-            type="primary"
-            size="large"
-            icon={<ShoppingCartOutlined />}
-            onClick={() => handleAddToCart()}
+    <S.ProductDetailWrapper>
+      <Card size="small" bordered={false}>
+        <Row gutter={[16, 16]}>
+          <Col xs={24} md={10}>
+            {!!productDetail.data.images?.length && (
+              <img
+                src={productDetail.data.images[0]?.url}
+                width="100%"
+                height="auto"
+                alt=""
+              />
+            )}
+          </Col>
+          <Col xs={24} md={14}>
+            <div>
+              <h2>{productDetail.data.name}</h2>
+              <Link
+                to={ROUTES.USER.PRODUCT_LIST}
+                state={{ categoryId: productDetail.data.category?.id }}
+              >
+                <h3>{productDetail.data.category?.name}</h3>
+              </Link>
+              <Space align="baseline">
+                <Rate value={averageRate} disabled />
+                <span>
+                  {`(${
+                    reviewList.data.length
+                      ? `${reviewList.data.length} lượt đánh giá`
+                      : "chưa có lượt đánh giá"
+                  })`}
+                </span>
+              </Space>
+              <p style={{ fontSize: 24, margin: "12px 0 16px" }}>
+                {productDetail.data.price?.toLocaleString()} VND
+              </p>
+              <InputNumber
+                min={1}
+                value={quantity}
+                onChange={(value) => setQuantity(value)}
+                style={{ display: "block", marginBottom: 16 }}
+              />
+              <Space>
+                <Button
+                  type="primary"
+                  size="large"
+                  icon={<ShoppingCartOutlined />}
+                  onClick={() => handleAddToCart()}
+                >
+                  Add To Cart
+                </Button>
+                <Button
+                  size="large"
+                  danger={isLike}
+                  icon={isLike ? <HeartFilled /> : <HeartOutlined />}
+                  onClick={() => handleToggleFavorite()}
+                >
+                  {productDetail.data?.favorites?.length || 0} liked
+                </Button>
+              </Space>
+            </div>
+          </Col>
+        </Row>
+      </Card>
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+        <Col xs={24} md={16}>
+          <Card size="small" title="Thông tin sản phẩm" bordered={false}>
+            <S.ProductContent
+              dangerouslySetInnerHTML={{
+                __html: productDetail.data.content,
+              }}
+            ></S.ProductContent>
+          </Card>
+          <Card
+            title="Bình luận & nhận xét"
+            size="small"
+            bordered={false}
+            style={{ marginTop: 16 }}
           >
-            Add To Cart
-          </Button>
-          <Button
-            size="large"
-            danger={isLike}
-            icon={isLike ? <HeartFilled /> : <HeartOutlined />}
-            onClick={() => handleToggleFavorite()}
-          >
-            {productDetail.data?.favorites?.length || 0} liked
-          </Button>
-        </Space>
-
-        <Card size="small">
-          <S.ProductContent
-            dangerouslySetInnerHTML={{
-              __html: productDetail.data.content,
-            }}
-          ></S.ProductContent>
-        </Card>
-
-        <div>
-          {userInfo.data.id && (
-            <Card title="Review" size="small">
+            {userInfo.data.id && (
               <Form
                 form={reviewForm}
                 name="reviewForm"
                 layout="vertical"
                 onFinish={(values) => handleReview(values)}
                 autoComplete="off"
+                style={{ padding: 12, borderRadius: 6, background: "#f0f2f5" }}
               >
                 <Form.Item
                   label="Rate"
@@ -258,14 +291,20 @@ function ProductDetailPage() {
                   Submit
                 </Button>
               </Form>
-            </Card>
-          )}
-          {renderReviewList}
-        </div>
-      </div>
+            )}
+            {renderReviewList}
+          </Card>
+        </Col>
+        <Col xs={24} md={8}>
+          <Card size="small" title="Cấu hình" bordered={false}>
+            Cấu hình
+          </Card>
+        </Col>
+      </Row>
+
       <p>Sản phẩm tương tự</p>
       <Row gutter={[16, 16]}>{renderProductList}</Row>
-    </Spin>
+    </S.ProductDetailWrapper>
   );
 }
 

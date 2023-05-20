@@ -110,7 +110,28 @@
       "isDelete": false
     }
   ],
-  "reviews": [],
+  "reviews": [
+    {
+      "rate": 4,
+      "comment": "123",
+      "userId": 1,
+      "productId": 1,
+      "createdAt": 1684558796802,
+      "updatedAt": 1684558796805,
+      "isDelete": false,
+      "id": 1
+    },
+    {
+      "rate": 5,
+      "comment": "gsdg",
+      "userId": 1,
+      "productId": 1,
+      "createdAt": 1684560189385,
+      "updatedAt": 1684560189386,
+      "isDelete": false,
+      "id": 2
+    }
+  ],
   "favorites": [
     {
       "id": 1,

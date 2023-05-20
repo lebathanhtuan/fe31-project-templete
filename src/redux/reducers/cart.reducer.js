@@ -35,6 +35,7 @@ const cartReducer = createReducer(initialState, {
       ...state.cartList[productIndex],
       quantity: quantity,
     });
+    localStorage.setItem("cartList", JSON.stringify(newCartList));
     return {
       ...state,
       cartList: newCartList,
@@ -48,6 +49,7 @@ const cartReducer = createReducer(initialState, {
     newCartList.splice(productIndex, 1);
     // Cách 2
     // const newCartList = state.cartList.filter((item) => item.id !== id)
+    localStorage.setItem("cartList", JSON.stringify(newCartList));
     return {
       ...state,
       cartList: newCartList,

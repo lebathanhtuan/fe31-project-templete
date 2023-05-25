@@ -8,6 +8,6 @@ export const favoriteProductAction = createAction(
 export const unFavoriteProductAction = createAction(
   REQUEST(FAVORITE_ACTION.UN_FAVORITE_PRODUCT)
 );
-export const getFavoriteList = createAction(
+export const getFavoriteListAction = createAction(
   REQUEST(FAVORITE_ACTION.GET_FAVORITE_LIST)
 );

@@ -2,11 +2,11 @@
   "users": [
     {
       "email": "tuanadmin@gmail.com",
-      "password": "$2a$10$WbCldY/Ip1nz7GPKcZnsS.f/Z/aM5pC16Uf6JmAUfGYxmSp3gUqAW",
+      "password": "$2a$10$TNb.zyoswpTMHYHkcnmfyugmrfe4ULodUog4z/PmYgzqbB/EsehIq",
       "fullName": "Tuan Admin",
       "role": "admin",
       "createdAt": 1682080507667,
-      "updatedAt": 1682080507668,
+      "updatedAt": 1685005678225,
       "isDelete": false,
       "id": 1
     },

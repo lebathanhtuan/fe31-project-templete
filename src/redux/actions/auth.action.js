@@ -8,3 +8,9 @@ export const logoutAction = createAction(REQUEST(AUTH_ACTION.LOGOUT));
 export const getUserInfoAction = createAction(
   REQUEST(AUTH_ACTION.GET_USER_INFO)
 );
+export const updateUserInfoAction = createAction(
+  REQUEST(AUTH_ACTION.UPDATE_USER_INFO)
+);
+export const changePasswordAction = createAction(
+  REQUEST(AUTH_ACTION.CHANGE_PASSWORD)
+);
